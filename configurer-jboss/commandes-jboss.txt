@@ -1,0 +1,29 @@
+# Vérifiez que JBOSS termine bien le traitement de chaque commande, ouvrez deux consoles de commande:
+
+# Console 1
+#N'arrète pas de vérifier l'exécution de la commande
+tail -f /opt/jboss/standalone/log/server.log
+
+#Console 2
+#PREPARATION JBOSS
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --file=/opt/configurer-jboss/conf-jboss01.cli;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --command=:reload;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --file=/opt/configurer-jboss/conf-jboss02.cli;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --command=:reload;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --file=/opt/configurer-jboss/conf-jboss03.cli;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --command=:reload;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --file=/opt/configurer-jboss/conf-jboss04.cli;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --command=:reload;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --file=/opt/configurer-jboss/conf-jboss05.cli;
+sudo -u jboss /opt/jboss/bin/jboss-cli.sh --connect --command=":shutdown(restart=true)";
+
+
+#INSTALLER APLICATION
+sudo su -l;
+cd /opt/signserver;
+ ant clean deploy;
+exit;
+
+##OUVRIR NAVIGATION
+#https://votre_IP:8442/signserver
+
